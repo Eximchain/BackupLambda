@@ -2,7 +2,7 @@
 
 
 [[projects]]
-  digest = "1:014e79cf5c422dd0547a87bde33c7f7b3cd29116a96fac8897c7e50f18531dea"
+  digest = "1:11827052e971e952315dbf37e63f6cd62666b739b39c1d1d450871b74b62cf0c"
   name = "github.com/aws/aws-lambda-go"
   packages = [
     "events",
@@ -10,12 +10,12 @@
     "lambda/messages",
     "lambdacontext",
   ]
-  pruneopts = "UT"
+  pruneopts = "T"
   revision = "2d482ef09017ae953b1e8d5a6ddac5b696663a3c"
   version = "v1.6.0"
 
 [[projects]]
-  digest = "1:3cb279a5c1c80ecd2ff971ec45e9e564b072bb7bf826830be9a5447192de2806"
+  digest = "1:49c34239784f03f88c2ca1ceecee7ff942990159de15971aa680c11faac6fb98"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -61,16 +61,32 @@
     "service/ssm",
     "service/sts",
   ]
-  pruneopts = "UT"
+  pruneopts = "T"
   revision = "5ebc7a404e942062fd3aa7ff50975498716eb990"
   version = "v1.15.78"
 
 [[projects]]
-  digest = "1:e22af8c7518e1eab6f2eab2b7d7558927f816262586cd6ed9f349c97a6c285c4"
+  digest = "1:eebce3c1fad57b604c517ea649edd5dcbd2530f0f7e62ac0b7b232f2eacbcc88"
   name = "github.com/jmespath/go-jmespath"
   packages = ["."]
-  pruneopts = "UT"
+  pruneopts = "T"
   revision = "0b12d6b5"
+
+[[projects]]
+  branch = "master"
+  digest = "1:0550efca924537365fba757950ae7b6ec8c11f018b5c2d6a189ac9a2af0f1ba7"
+  name = "golang.org/x/crypto"
+  packages = [
+    "curve25519",
+    "ed25519",
+    "ed25519/internal/edwards25519",
+    "internal/chacha20",
+    "internal/subtle",
+    "poly1305",
+    "ssh",
+  ]
+  pruneopts = "T"
+  revision = "3d3f9f413869b949e48070b5bc593aa22cc2b8f2"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -87,6 +103,7 @@
     "github.com/aws/aws-sdk-go/service/s3",
     "github.com/aws/aws-sdk-go/service/s3/s3manager",
     "github.com/aws/aws-sdk-go/service/ssm",
+    "golang.org/x/crypto/ssh",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

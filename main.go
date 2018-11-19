@@ -41,21 +41,6 @@ type (
 	}
 )
 
-// Actual message received from AWS SNS
-// {
-//     "version": "0",
-//     "id": "21c5a7d1-e166-caf3-b4ba-caf516abfdde",
-//     "detail-type": "Scheduled Event",
-//     "source": "aws.events",
-//     "account": "037794263736",
-//     "time": "2018-10-18T08:32:08Z",
-//     "region": "us-east-1",
-//     "resources": [
-//         "arn:aws:events:us-east-1:037794263736:rule/BackupLambda-us-east-1-84913-20181018082704872000000001"
-//     ],
-//     "detail": {}
-// }
-
 func getNetworkId() (result string) {
 	result = os.Getenv("NetworkId")
 	if result == "" {
@@ -250,9 +235,9 @@ func BackupHandler(ctx context.Context, snsEvent events.SNSEvent) {
 }
 
 func DebugEnvironment() (result bool) {
-	func_name := os.Getenv("AWS_LAMBDA_FUNCTION_NAME")
-	vs_code_logs := os.Getenv("VSCODE_LOGS")
-	result = func_name == "" || vs_code_logs != "" // is in DebugEnvironment if AWS_LAMBDA_FUNCTION_NAME is empty
+	funcName := os.Getenv("AWS_LAMBDA_FUNCTION_NAME")
+	vsCodeLogs := os.Getenv("VSCODE_LOGS")
+	result = funcName == "" || vsCodeLogs != "" // is in DebugEnvironment if AWS_LAMBDA_FUNCTION_NAME is empty
 	return
 }
 

@@ -24,6 +24,7 @@
 #   go-tests = true
 #   unused-packages = true
 
+required = ["golang.org/x/crypto/ssh"]
 
 [[constraint]]
   name = "github.com/aws/aws-lambda-go"
@@ -35,4 +36,3 @@
 
 [prune]
   go-tests = true
-  unused-packages = true
