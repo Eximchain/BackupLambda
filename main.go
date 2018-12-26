@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"crypto/sha1"
 	"errors"
 	"fmt"
+	"io"
 	"math/rand"
 	"net"
 	"os"
@@ -21,7 +23,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
-var (
+const (
 	// BuildDate allows the external linker to set the build date when building
 	BuildDate string
 )
@@ -57,9 +59,22 @@ func getNetworkID() (result string) {
 	return
 }
 
-func getPrintEnv(name string) (result string) {
+func sha(value string) (result string) {
+	h := sha1.New()
+	io.WriteString(h, value)
+	result = fmt.Sprintf("%x", h.Sum(nil))
+	return
+}
+
+func getPrintEnv(name string, sensitive bool) (result string) {
 	result = os.Getenv(name)
-	fmt.Printf("%s: %s\n", name, result)
+	var obfuscatedValue string
+	if sensitive {
+		obfuscatedValue = sha(result)
+	} else {
+		obfuscatedValue = result
+	}
+	fmt.Printf("%s: %s\n", name, obfuscatedValue)
 	return
 }
 
@@ -163,10 +178,10 @@ func BackupHandler(ctx context.Context, snsEvent events.SNSEvent) {
 		sess = session.Must(session.NewSessionWithOptions(opts))
 	}
 
-	myBucket := getPrintEnv("Bucket")
-	myKey := getPrintEnv("Key")
-	sshUser := getPrintEnv("SSHUser")
-	sshPass := getPrintEnv("SSHPass")
+	myBucket := getPrintEnv("Bucket", false)
+	myKey := getPrintEnv("Key", false)
+	sshUser := getPrintEnv("SSHUser", false)
+	sshPass := getPrintEnv("SSHPass", true)
 
 	if sshPass == "" {
 		downloader := s3manager.NewDownloader(sess)
